@@ -22,9 +22,9 @@ const Cart = sequelize.define('Cart', {
 
 sequelize.sync({ alter: true}
     .then(() => {
-        console.log("Category table is created")
+        console.log("Cart table is created")
     })
-    .catch(err => console.error("❌ Error creating category table:", err))
+    .catch(err => console.error("❌ Error creating cart table:", err))
 );
 
 module.exports = Cart;
