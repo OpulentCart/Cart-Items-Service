@@ -31,14 +31,14 @@ exports.createCart = async(req, res) => {
 // delete a cart
 exports.deleteCart = async(req, res) => {
     try{
-        const cart = await Cart.findByPk(req.params.id);
+        const cart = await Cart.findOne({ where: {user_id: req.user.user_id}});
         if(!cart){
             return res.status(404).json({
                 success: false,
                 message: "Cart not found"
             });
         }
-        await Cart.destroy();
+        await cart.destroy();
         return res.status(200).json({
             success: true,
             message: 'Cart deleted successfully'
