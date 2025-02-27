@@ -6,3 +6,5 @@ const { authenticateUser, authorizeRole } = require('../middleware/authMiddlewar
 router.post('/', authenticateUser, authorizeRole('customer'), cartController.createCart);
 router.get('/', authenticateUser, authorizeRole('customer'), cartController.getCartOfCustomer);
 router.delete('/', authenticateUser, authorizeRole('customer'), cartController.deleteCart);
+
+module.exports = router;
