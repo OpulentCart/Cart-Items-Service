@@ -20,11 +20,10 @@ const Cart = sequelize.define('Cart', {
     timestamps: true
 });
 
-sequelize.sync({ alter: true}
+sequelize.sync({ alter: true})
     .then(() => {
         console.log("Cart table is created")
     })
-    .catch(err => console.error("❌ Error creating cart table:", err))
-);
+    .catch(err => console.error("❌ Error creating cart table:", err));
 
 module.exports = Cart;

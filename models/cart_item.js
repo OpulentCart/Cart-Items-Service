@@ -34,11 +34,10 @@ const CartItems = sequelize.define('CartItem', {
     timestamps: true
 });
 
-sequelize.sync({ alter: true}
+sequelize.sync({ alter: true})
     .then(() => {
-        console.log("CartItems table is created")
+        console.log("Cart-Items table is created")
     })
-    .catch(err => console.error("❌ Error creating cartItems table:", err))
-);
+    .catch(err => console.error("❌ Error creating cart-items table:", err));
 
 module.exports = CartItems;

@@ -5,7 +5,7 @@ const { connectDB } = require("./config/dbConfig");
 require("dotenv").config();
 
 const cartRoutes = require('./routes/cartRoutes');
-const cartItemRoutes = require('./routes/cartItemRoutes');
+const cartItemRoutes = require('./routes/cart_itemRoutes');
 
 // middleware
 app.use(express.json());
