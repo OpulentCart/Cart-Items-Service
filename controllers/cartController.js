@@ -8,7 +8,8 @@ exports.createCart = async(req, res) => {
 
         // check if a cart already exists for the suer
         const existingCart = await Cart.findOne({ where: { user_id: user_id }});
-        if(!existingCart) {
+        if(existingCart) {
+            
             return res.status(400).json({
                 success: true,
                 message: 'A cart already exists for you'
@@ -55,7 +56,7 @@ exports.deleteCart = async(req, res) => {
 // get a cart by ID
 exports.getCartOfCustomer = async(req, res) => {
     try{
-        const cart = await Cart.findOne({ user_id: req.user.user_id });
+        const cart = await Cart.findOne({ where: { user_id: req.user.user_id} });
         if(!cart) {
             return res.status(404).json({
                 success: false,
