@@ -1,5 +1,6 @@
 const CartItem = require('../models/cart_item');
 const Cart = require('../models/cart');
+const CartItems = require('../models/cart_item');
 
 // get cart Items by cart ID
 exports.getCartItemsByCartId = async (req, res) => {
@@ -76,4 +77,22 @@ exports.removeCartItem = async (req, res) => {
         console.error("error in removing item from cart", error.message);
         return res.status(500).json({ success: false, message: 'Error removing cart item' });
     }
+};
+
+// get count of the Cart-Items
+exports.getTotalCartItemsCount = async (req, res) => {
+        try{
+            const { cart_id } = req.body;
+            const totalCartItems = await CartItems.count({ where: { cart_id: cart_id }});
+            return res.status(200).json({
+                success: true,
+                totalCartItems
+            });
+        }catch(error){
+            console.error("Error in returning the count of Cart-Items", error.message);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to get the Total Cart Items"
+            });
+        }
 };
