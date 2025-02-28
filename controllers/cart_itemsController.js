@@ -8,9 +8,11 @@ exports.getCartItemsByCartId = async (req, res) => {
         const cartItems = await CartItem.findAll({ 
             where: { cart_id: req.params.cart_id}
         });
+        const totalCartItems = await CartItem.count({ where: { cart_id: req.params.cart_id }});
         return res.status(200).json({
             success: true,
-            cartItems
+            cartItems,
+            totalCartItems
         });
     }catch(error){
         console.error("Error in getting all the Cart-iems: ", error.message);
@@ -79,20 +81,20 @@ exports.removeCartItem = async (req, res) => {
     }
 };
 
-// get count of the Cart-Items
-exports.getTotalCartItemsCount = async (req, res) => {
-        try{
-            const { cart_id } = req.body;
-            const totalCartItems = await CartItems.count({ where: { cart_id: cart_id }});
-            return res.status(200).json({
-                success: true,
-                totalCartItems
-            });
-        }catch(error){
-            console.error("Error in returning the count of Cart-Items", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "Failed to get the Total Cart Items"
-            });
-        }
-};
+// // get count of the Cart-Items
+// exports.getTotalCartItemsCount = async (req, res) => {
+//         try{
+//             const { cart_id } = req.body;
+//             const totalCartItems = await CartItems.count({ where: { cart_id: cart_id }});
+//             return res.status(200).json({
+//                 success: true,
+//                 totalCartItems
+//             });
+//         }catch(error){
+//             console.error("Error in returning the count of Cart-Items", error.message);
+//             return res.status(500).json({
+//                 success: false,
+//                 message: "Failed to get the Total Cart Items"
+//             });
+//         }
+// };
