@@ -22,11 +22,11 @@ exports.getCartItemsByCartId = async (req, res) => {
 
 exports.addCartItem = async (req, res) => {
     try{
-        const { cart_id, product_id, quantity} = req.body;
+        const { cart_id, product_id} = req.body;
         const cartItem = await CartItem.create({
             cart_id,
             product_id,
-            quantity
+            quantity: 1
         });
         return res.status(201).json({
             success: true,
