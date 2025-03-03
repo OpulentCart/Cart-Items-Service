@@ -41,27 +41,33 @@ exports.addCartItem = async (req, res) => {
     }
 };
 
-exports.updateCartItem = async(req, res) => {
-    try{
+exports.updateCartItem = async (req, res) => {
+    try {
         const { quantity } = req.body;
         const cartItem = await CartItem.findByPk(req.params.id);
+
         if (!cartItem) {
             return res.status(404).json({ error: 'Cart item not found' });
         }
+
         cartItem.quantity = quantity;
         await cartItem.save();
-        return res.json(200).json({
+
+        return res.status(200).json({
             success: true,
             cartItem
         });
-    }catch(error){
-        console.error("Error in updating the quantity of the cart-iem", error.message);
+
+    } catch (error) {
+        console.error("Error in updating the quantity of the cart-item", error.message);
+
         return res.status(500).json({
             success: false,
             message: "Failed to update the quantity"
         });
     }
-}
+};
+
 
 // Remove item from cart
 exports.removeCartItem = async (req, res) => {
