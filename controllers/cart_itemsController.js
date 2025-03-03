@@ -1,5 +1,6 @@
 const CartItem = require('../models/cart_item');
 const Cart = require('../models/cart');
+const CartItems = require('../models/cart_item');
 
 // get cart Items by cart ID
 exports.getCartItemsByCartId = async (req, res) => {
@@ -7,9 +8,11 @@ exports.getCartItemsByCartId = async (req, res) => {
         const cartItems = await CartItem.findAll({ 
             where: { cart_id: req.params.cart_id}
         });
+        const totalCartItems = await CartItem.count({ where: { cart_id: req.params.cart_id }});
         return res.status(200).json({
             success: true,
-            cartItems
+            cartItems,
+            totalCartItems
         });
     }catch(error){
         console.error("Error in getting all the Cart-iems: ", error.message);
@@ -22,11 +25,11 @@ exports.getCartItemsByCartId = async (req, res) => {
 
 exports.addCartItem = async (req, res) => {
     try{
-        const { cart_id, product_id, quantity} = req.body;
+        const { cart_id, product_id} = req.body;
         const cartItem = await CartItem.create({
             cart_id,
             product_id,
-            quantity
+            quantity: 1
         });
         return res.status(201).json({
             success: true,
@@ -83,3 +86,21 @@ exports.removeCartItem = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Error removing cart item' });
     }
 };
+
+// // get count of the Cart-Items
+// exports.getTotalCartItemsCount = async (req, res) => {
+//         try{
+//             const { cart_id } = req.body;
+//             const totalCartItems = await CartItems.count({ where: { cart_id: cart_id }});
+//             return res.status(200).json({
+//                 success: true,
+//                 totalCartItems
+//             });
+//         }catch(error){
+//             console.error("Error in returning the count of Cart-Items", error.message);
+//             return res.status(500).json({
+//                 success: false,
+//                 message: "Failed to get the Total Cart Items"
+//             });
+//         }
+// };
